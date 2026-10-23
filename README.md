@@ -32,7 +32,7 @@
 ## 📂 Complete Project Directory Structure
 
 ```text
-my-portfolio/
+portfolio/
 ├── 📁 node_modules/             # Installed dependencies
 ├── 📁 public/                   # Static root assets
 │   └── favicon.ico              # Browser tab icon
@@ -85,14 +85,14 @@ To run this repository on your machine, execute the following commands in your t
 
 1. **Clone the repository:**
 ```bash
-git clone [https://github.com/Braveen811/React.git](https://github.com/Braveen811/React.git)
+git clone https://github.com/Braveen811/portfolio.git
 
 ```
 
 
 2. **Navigate to the project directory:**
 ```bash
-cd React/Portfolio
+cd portfolio
 
 ```
 
