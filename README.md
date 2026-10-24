@@ -1,4 +1,3 @@
-```markdown
 # ⚡ Cyberpunk React Portfolio
 
 > A fully immersive, interactive, and responsive developer portfolio featuring a glassmorphism design system, dynamic Dark/Light theme switching, a 3D glass portrait reveal, and an interactive Vanta.NET particle network background.
