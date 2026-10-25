@@ -84,7 +84,7 @@ To run this repository on your machine, execute the following commands in your t
 
 1. **Clone the repository:**
 ```bash
-git clone https://github.com/Braveen811/portfolio.git
+git clone https://github.com/braveen-r/portfolio.git
 
 ```
 
@@ -114,9 +114,7 @@ npm run dev
 
 ---
 
-## 👨‍💻 Author & Credits
-
-**Braveen R** *Final Year BCA Student | Frontend Developer* - GitHub: [@Braveen811](https://www.google.com/search?q=https://github.com/Braveen811)
+**Author:** [Braveen R](https://braveenr.linklee.in/)</br>
 
 ---
 
