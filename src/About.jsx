@@ -20,7 +20,7 @@ const About = () => {
         <div className="about-card">
           <span className="tag">02 // WHAT_I_BUILD</span>
           <p>
-            I turn ideas into digital reality. I focus on clean code and intentional design to create interfaces people actually want to click, scroll, and use.
+            I turn ideas into seamless digital experiences. I focus on clean front-end design that people actually want to use, backed by automated DevOps workflows and robust infrastructure.
           </p>
         </div>
         

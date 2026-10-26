@@ -14,10 +14,74 @@ const Projects = () => {
         <a href="#" className="project-card active" target="_blank" rel="noopener noreferrer">
           <span className="status">COMPLETED</span>
           <h3>React Cyberpunk Portfolio</h3>
-          <p>A highly interactive, glassmorphism-based developer portfolio featuring dynamic theming and 3D interactions.</p>
+          <p>A highly interactive, glassmorphism-based developer portfolio featuring dynamic theming and 3D interactions</p>
           <span className="stack">[ React, Styled Components, Vercel ]</span>
         </a>
-        
+
+        {/* ACTIVE PROJECT: Completed/Main Showcase */}
+        <a href="https://github.com/braveen-r/the_archer_dotfiles" className="project-card active" target="_blank" rel="noopener noreferrer">
+          <span className="status">COMPLETED</span>
+          <h3>The Archer Dotfiles</h3>
+          <p>A highly customized, blazingly fast Arch Linux setup using bspwm, heavily modified for a seamless, daily-driver experience</p>
+          <span className="stack">[ Shell, Python, SCSS ]</span>
+        </a>
+
+         {/* ACTIVE PROJECT: Completed/Main Showcase */}
+        <a href="https://github.com/braveen-r/gitops-devsecops-k8s" className="project-card active" target="_blank" rel="noopener noreferrer">
+          <span className="status">COMPLETED</span>
+          <h3>Gitops Devsecops K8s</h3>
+          <p>This project automates security scanning, container image building, vulnerability assessment, and continuous delivery to a lightweight local Kubernetes cluster using ArgoCD</p>
+          <span className="stack">[ JavaScript, Dockerfile, Shell ]</span>
+        </a>
+
+        {/* ACTIVE PROJECT: Completed/Main Showcase */}
+        <a href="https://github.com/braveen-r/zero-cost-telemetry-platform" className="project-card active" target="_blank" rel="noopener noreferrer">
+          <span className="status">COMPLETED</span>
+          <h3>The Zero-Cost Telemetry Platform</h3>
+          <p>A blazingly fast, end-to-end infrastructure observability pipeline capturing real-time Arch Linux kernel events using eBPF, routed through a time-series database, and visualized on a custom React dashboard—all running locally for $0</p>
+          <span className="stack">[ JavaScript, CSS, Python, C, HCL, HTML ]</span>
+        </a>
+
+        {/* ACTIVE PROJECT: Completed/Main Showcase */}
+        <a href="https://github.com/braveen-r/distro-doctor" className="project-card active" target="_blank" rel="noopener noreferrer">
+          <span className="status">COMPLETED</span>
+          <h3>Distro-Doctor</h3>
+          <p>Professional-grade DevOps CLI and CI/CD utility for automatically validating project installation instructions across multiple Linux distributions in parallel using sandboxed Docker containers</p>
+          <span className="stack">[ Python ]</span>
+        </a>
+
+        {/* ACTIVE PROJECT: Completed/Main Showcase */}
+        <a href="https://github.com/braveen-r/archlings" className="project-card active" target="_blank" rel="noopener noreferrer">
+          <span className="status">COMPLETED</span>
+          <h3>Archlings</h3>
+          <p>A "Rustlings-inspired" Arch Linux troubleshooting trainer that provides sandboxed, Docker-based labs for practicing system repairs, complete with automated verification and telemetry</p>
+          <span className="stack">[ Python, Shell ]</span>
+        </a>
+
+        {/* ACTIVE PROJECT: Completed/Main Showcase */}
+        <a href="https://github.com/braveen-r/chaos-stack" className="project-card active" target="_blank" rel="noopener noreferrer">
+          <span className="status">COMPLETED</span>
+          <h3>Chaos-Stack</h3>
+          <p>A local Chaos Engineering CLI and SRE Observability Control Plane built to intentionally break Docker and emulated AWS infrastructure to validate system resilience</p>
+          <span className="stack">[ Python ]</span>
+        </a>
+
+        {/* ACTIVE PROJECT: Completed/Main Showcase */}
+        <a href="https://github.com/braveen-r/restore-drill" className="project-card active" target="_blank" rel="noopener noreferrer">
+          <span className="status">COMPLETED</span>
+          <h3>Restore-Drill</h3>
+          <p>An automated Site Reliability Engineering (SRE) disaster recovery engine that extracts backup snapshots, measures RTO/RPO SLAs, executes integrity smoke tests, and dispatches dynamic runbooks via Discord</p>
+          <span className="stack">[ JavaScript, Python, Shell, CSS, HTML ]</span>
+        </a>
+
+        {/* ACTIVE PROJECT: Completed/Main Showcase */}
+        <a href="https://github.com/braveen-r/build-pulse-analytics" className="project-card active" target="_blank" rel="noopener noreferrer">
+          <span className="status">COMPLETED</span>
+          <h3>Build-Pulse Analytics</h3>
+          <p>A zero-cost, serverless DevOps observability platform that extracts real-time CI/CD pipeline metrics from GitHub Actions and visualizes them on a high-performance React command center</p>
+          <span className="stack">[ JavaScript, CSS, HTML ]</span>
+        </a>
+
         {/* ACTIVE PROJECT: Completed/Main Showcase (No Link) */}
         <div className="project-card active">
           <span className="status">IN_PROGRESS</span>
@@ -28,19 +92,12 @@ const Projects = () => {
 
         {/* IN-PROGRESS/UPCOMING PROJECT: Dashed Wireframe Style */}
         <div className="project-card">
-          <span className="status">COMING_SOON</span>
+          <span className="status">UPCOMING</span>
           <h3></h3>
           <p></p>
-          <span className="stack">[ Project 3 ]</span>
+          <span className="stack">[ Soon ]</span>
         </div>
 
-        {/* IN-PROGRESS/UPCOMING PROJECT: Dashed Wireframe Style */}
-        <div className="project-card">
-          <span className="status">COMING_SOON</span>
-          <h3></h3>
-          <p></p>
-          <span className="stack">[ Project 4 ]</span>
-        </div>
 
       </div>
     </ProjectsContainer>

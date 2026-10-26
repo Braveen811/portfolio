@@ -46,7 +46,12 @@ const TITLES = [
   "Developer", 
   "Frontend Developer", 
   "Web Enthusiast", 
-  "BCA Student"
+  "BCA Student",
+  "DevOps Enthusiast",
+  "Cloud Explorer",
+  "Linux Enthusiast",
+  "System Ricer",
+  "Open Source Contributor"
 ];
 
 const Hero = () => {
@@ -68,8 +73,7 @@ const Hero = () => {
         </h1>
         
         <p>
-          I am a passionate developer with a growing interest in frontend development, always exploring how good code and good design come together. Currently in my final year of BCA, I love turning ideas into reality through clean code and thoughtful design.
-        </p>
+        I build fast, interactive web applications and heavily customized system environments. Currently completing my BCA, I combine a keen eye for frontend design with a deep appreciation for cloud automation, system ricing, and writing clean, scalable code</p>
         
         {/* SocialMedia Component includes the Let's Talk button now */}
         <SocialMedia />
