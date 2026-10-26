@@ -90,8 +90,8 @@ const Skills = () => {
         <div className="skill-group-container">
           <div className="skill-group-label">Certifications & Design</div>
           <div className="skill-tags">
-            <span className="skill-tag primary">Python with ITS (Edumantra)</span>
-            <span className="skill-tag primary">Cloud Computing with AWS (Edumantra)</span>
+            <span className="skill-tag primary">Python with ITS</span>
+            <span className="skill-tag primary">Cloud Computing with AWS</span>
             <span className="skill-tag">UI/Web Design</span>
             <span className="skill-tag">Adobe Photoshop & Illustrator</span>
           </div>
