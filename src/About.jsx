@@ -131,6 +131,7 @@ const AboutContainer = styled.section`
   .now-line-wrapper {
     display: flex;
     justify-content: flex-start;
+    width: 100%;
   }
 
   .now-line {
@@ -149,6 +150,16 @@ const AboutContainer = styled.section`
     align-items: center;
     gap: 12px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    
+    /* CRITICAL: Prevents the box from breaking the mobile screen width */
+    max-width: 100%; 
+  }
+
+  .now-line span {
+    /* Ensures text wraps cleanly to the next line on small screens */
+    white-space: normal; 
+    word-wrap: break-word;
+    line-height: 1.4;
   }
 
   /* Animated Neon Dot */
@@ -157,8 +168,24 @@ const AboutContainer = styled.section`
     height: 10px;
     background: var(--accent-color);
     border-radius: 50%;
+    
+    /* CRITICAL FIX: Forces the dot to stay a perfect circle even when text wraps */
+    flex-shrink: 0; 
+    
     box-shadow: 0 0 10px var(--accent-color);
     animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  /* Mobile Responsive Adjustments */
+  @media (max-width: 900px) {
+    .now-line-wrapper {
+      justify-content: center; /* Centers the entire badge on mobile devices */
+    }
+    
+    .now-line {
+      font-size: 0.8rem;
+      padding: 10px 16px;
+    }
   }
 
   @keyframes pulse {
