@@ -12,7 +12,7 @@ const Card = () => {
         <div className="inside-content">
           <img src={profilePic} alt="Braveen R" className="profile-image" />
         </div>
-
+ 
         {/* TOP LAYER: The Anime Image that fades out */}
         <div className="cover">
           <img 

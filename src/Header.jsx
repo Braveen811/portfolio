@@ -1,47 +1,73 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import Switch from './Switch'; // Importing your animated dark/light switch
+import anime from 'animejs';
+import Switch from './Switch'; 
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const headerRef = useRef(null);
+
+  useEffect(() => {
+    anime({
+      targets: headerRef.current,
+      translateY: ['-100%', 0],
+      opacity: [0, 1],
+      easing: 'easeOutExpo',
+      duration: 1200,
+      delay: 200 
+    });
+  }, []);
+
+  const handleScroll = (e, targetId) => {
+    e.preventDefault(); 
+    setIsOpen(false);   
+
+    const target = document.querySelector(targetId);
+    if (target) {
+      const headerOffset = 80; 
+      const elementPosition = target.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   return (
     <>
-      {/* Invisible overlay to close menu when clicking outside */}
       {isOpen && <MenuOverlay onClick={() => setIsOpen(false)} />}
       
-      <NavContainer>
-        {/* LEFT: Your Name / Logo */}
+      <NavContainer ref={headerRef}>
         <div className="logo">
           Braveen<span>.</span>R
         </div>
 
-        {/* MIDDLE: Navigation Links */}
         <div className={`nav-links ${isOpen ? 'open' : ''}`}>
-          <a href="#home" onClick={() => setIsOpen(false)}>Home</a>
-          <a href="#about" onClick={() => setIsOpen(false)}>About</a>
-          <a href="#skills" onClick={() => setIsOpen(false)}>Skills</a>
-          <a href="#projects" onClick={() => setIsOpen(false)}>Projects</a>
-          <a href="#contact" onClick={() => setIsOpen(false)}>Contact</a>
+          <a href="#home" onClick={(e) => handleScroll(e, '#home')}>Home</a>
+          <a href="#about" onClick={(e) => handleScroll(e, '#about')}>About</a>
+          <a href="#skills" onClick={(e) => handleScroll(e, '#skills')}>Skills</a>
+          <a href="#projects" onClick={(e) => handleScroll(e, '#projects')}>Projects</a>
+          <a href="#contact" onClick={(e) => handleScroll(e, '#contact')}>Contact</a>
           
-          {/* Added CV button exclusively for the mobile dropdown */}
+          {/* Mobile CV Button placed directly under Contact */}
           <a href="src/assets/CV.pdf" className="cv-btn mobile-only-cv" download onClick={() => setIsOpen(false)}>
             Download CV
           </a>
         </div>
 
-        {/* RIGHT: Actions (Switch & CV) */}
         <div className="action-items">
-          {/* Switch is now always visible */}
           <div className="switch-wrapper">
             <Switch />
           </div>
           
+          {/* Desktop CV Button */}
           <a href="src/assets/CV.pdf" className="cv-btn desktop-only-cv" download>
             Download CV
           </a>
           
-          {/* Mobile Hamburger Menu Icon */}
+          {/* Hamburger Icon */}
           <div className="hamburger" onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? '✕' : '☰'}
           </div>
@@ -53,19 +79,18 @@ const Header = () => {
 
 // --- Styled Components ---
 
-// Overlay to detect outside clicks
 const MenuOverlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.3); /* Subtle darkening */
+  background: rgba(0, 0, 0, 0.3); 
   backdrop-filter: blur(2px);
-  z-index: 999; /* Sits exactly one layer below the header (1000) */
+  z-index: 999; 
 
-  @media (min-width: 901px) {
-    display: none; /* Prevent rendering on desktop */
+  @media (min-width: 993px) {
+    display: none; 
   }
 `;
 
@@ -75,10 +100,11 @@ const NavContainer = styled.header`
   align-items: center;
   padding: 15px 5%;
   background: var(--nav-bg);
-  backdrop-filter: blur(10px); /* Desktop Glassmorphism effect */
+  backdrop-filter: blur(10px); 
   position: sticky;
   top: 0;
   z-index: 1000;
+  opacity: 0; 
 
   .logo {
     font-size: 1.5rem;
@@ -87,7 +113,7 @@ const NavContainer = styled.header`
     color: var(--text-color);
     
     span {
-      color: var(--accent-color);
+      color: #B21318; 
     }
   }
 
@@ -102,9 +128,10 @@ const NavContainer = styled.header`
       font-weight: 600;
       font-size: 1rem;
       transition: color 0.3s ease;
+      cursor: pointer; 
 
       &:hover {
-        color: var(--accent-color);
+        color: #B21318;
       }
     }
   }
@@ -135,33 +162,35 @@ const NavContainer = styled.header`
     display: none;
     font-size: 1.8rem;
     cursor: pointer;
-    color: var(--text-color);
+    color: var(--text-main); /* Enforces dark icon in light mode */
+    user-select: none;
   }
 
-  /* Hide mobile CV button by default on desktop */
   .mobile-only-cv {
     display: none;
   }
 
-  /* Responsive Mobile Styles */
-  @media (max-width: 900px) {
-    .hamburger {
-      display: block;
+  /* Increased breakpoint to 992px to catch iPads and large phones */
+  @media (max-width: 992px) {
+    
+    /* Force Hamburger to show */
+    .hamburger { 
+      display: block !important; 
     }
-
-    /* Hide desktop CV button to make room for the Theme Switch */
-    .desktop-only-cv {
-      display: none;
+    
+    /* Force top-bar CV button to hide */
+    .desktop-only-cv { 
+      display: none !important; 
     }
-
-    /* Show CV button inside the mobile dropdown */
-    .mobile-only-cv {
-      display: inline-block;
-      margin-top: 15px;
+    
+    /* Force menu CV button to show */
+    .mobile-only-cv { 
+      display: inline-block !important; 
+      margin-top: 15px; 
     }
-
-    .action-items {
-      gap: 15px;
+    
+    .action-items { 
+      gap: 15px; 
     }
 
     .nav-links {
@@ -170,11 +199,10 @@ const NavContainer = styled.header`
       left: 0;
       width: 100%;
       
-      /* New Glassmorphism Gradient using your Theme Variables */
-      background: linear-gradient(180deg, var(--nav-bg) 0%, var(--card-bg, rgba(20, 20, 20, 0.95)) 100%);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      border-bottom: 1px solid var(--card-border, rgba(178, 19, 24, 0.2));
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--card-border);
       border-bottom-left-radius: 15px;
       border-bottom-right-radius: 15px;
       
@@ -190,7 +218,7 @@ const NavContainer = styled.header`
         max-height: 400px;
         opacity: 1;
         padding: 25px 0;
-        box-shadow: 0px 15px 30px var(--crimson-shadow, rgba(0,0,0,0.4));
+        box-shadow: var(--glow-shadow); 
       }
     }
   }

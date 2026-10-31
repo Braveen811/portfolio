@@ -1,17 +1,40 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import anime from 'animejs';
 
 const Quote = () => {
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const quoteRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+          anime({
+            targets: quoteRef.current,
+            scale: [0.9, 1],
+            translateY: [30, 0],
+            opacity: [0, 1],
+            easing: 'easeOutElastic(1, .8)',
+            duration: 1200
+          });
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (quoteRef.current) observer.observe(quoteRef.current);
+    return () => observer.disconnect();
+  }, [hasAnimated]);
+
   return (
     <QuoteContainer>
-      <div className="quote-box">
-        {/* Decorative Quote Mark */}
+      <div className="quote-box" ref={quoteRef} style={{ opacity: 0 }}>
         <div className="quote-icon">❝</div>
-        
         <blockquote>
           "Any fool can write code that a computer can understand. Good programmers write code that humans can understand."
         </blockquote>
-        
         <div className="author">
           <span className="line"></span>
           Martin Fowler
@@ -33,15 +56,11 @@ const QuoteContainer = styled.section`
     max-width: 800px;
     width: 100%;
     text-align: center;
-    
-    /* Matches your existing glassmorphism cards perfectly */
     background: var(--card-bg, rgba(0, 0, 0, 0.03));
     backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--surface-border, rgba(178, 19, 24, 0.15));
+    border: 1px solid rgba(178, 19, 24, 0.15);
     border-radius: 15px;
     padding: 50px 40px;
-    position: relative;
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 
     &:hover {
@@ -53,7 +72,7 @@ const QuoteContainer = styled.section`
 
   .quote-icon {
     font-size: 3rem;
-    color: var(--accent-color);
+    color: #B21318;
     opacity: 0.6;
     margin-bottom: 15px;
     line-height: 1;
@@ -67,7 +86,6 @@ const QuoteContainer = styled.section`
     line-height: 1.6;
     margin: 0 0 25px 0;
     font-weight: 500;
-    letter-spacing: 0.5px;
   }
 
   .author {
@@ -75,34 +93,24 @@ const QuoteContainer = styled.section`
     align-items: center;
     justify-content: center;
     gap: 15px;
-    
-    /* Terminal-style font to keep the developer aesthetic */
     font-family: 'Courier New', Courier, monospace;
-    color: var(--accent-color);
+    color: #B21318;
     font-weight: bold;
     font-size: 1rem;
-    letter-spacing: 1px;
     text-transform: uppercase;
 
     .line {
       width: 40px;
       height: 2px;
-      background: var(--accent-color);
+      background: #B21318;
       opacity: 0.7;
     }
   }
 
-  /* Responsive Adjustments for Mobile */
   @media (max-width: 768px) {
     padding: 30px 5%;
-    
-    .quote-box {
-      padding: 40px 25px;
-    }
-    
-    blockquote {
-      font-size: 1.1rem;
-    }
+    .quote-box { padding: 40px 25px; }
+    blockquote { font-size: 1.1rem; }
   }
 `;
 

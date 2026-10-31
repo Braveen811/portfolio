@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import anime from 'animejs';
 import Card from './Card';
-import SocialMedia from './SocialMedia'; // Ensures your new social component is imported
+import SocialMedia from './SocialMedia'; 
 
-// --- Custom Typing Hook ---
 const useTypingText = (words, typingSpeed = 150, deletingSpeed = 100, delayBeforeDelete = 1500) => {
   const [text, setText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
@@ -24,13 +24,11 @@ const useTypingText = (words, typingSpeed = 150, deletingSpeed = 100, delayBefor
       setTypingDelay(isDeleting ? deletingSpeed : typingSpeed);
 
       if (!isDeleting && text === fullText) {
-        // Finished typing the word, pause before deleting
         setTimeout(() => setIsDeleting(true), delayBeforeDelete);
       } else if (isDeleting && text === '') {
-        // Finished deleting, move to the next word
         setIsDeleting(false);
         setLoopNum(loopNum + 1);
-        setTypingDelay(500); // Short pause before typing next word
+        setTypingDelay(500); 
       }
     };
 
@@ -41,7 +39,6 @@ const useTypingText = (words, typingSpeed = 150, deletingSpeed = 100, delayBefor
   return text;
 };
 
-// 1. FIXED: Moved the titles outside the component to prevent infinite loop re-renders
 const TITLES = [
   "Developer", 
   "Frontend Developer", 
@@ -55,32 +52,65 @@ const TITLES = [
 ];
 
 const Hero = () => {
-  // Pass the constant array into the hook
   const typingText = useTypingText(TITLES);
+  
+  // Refs for Anime.js targeting
+  const textSectionRef = useRef(null);
+  const imageSectionRef = useRef(null);
+  const orbRef = useRef(null);
+
+  useEffect(() => {
+    // Create an Anime.js timeline for sequential loading
+    const tl = anime.timeline({
+      easing: 'easeOutExpo',
+      duration: 1000
+    });
+
+    // 1. Fade up the text elements one by one
+    tl.add({
+      targets: textSectionRef.current.children,
+      translateY: [30, 0],
+      opacity: [0, 1],
+      delay: anime.stagger(150, { start: 400 }) // Wait 400ms for header to start coming down
+    })
+    // 2. Slide the 3D card in from the right
+    .add({
+      targets: imageSectionRef.current,
+      translateX: [50, 0],
+      opacity: [0, 1],
+    }, '-=600') // Start this 600ms before the previous animation ends
+    // 3. Pulse the background orb in
+    .add({
+      targets: orbRef.current,
+      scale: [0.8, 1],
+      opacity: [0, 1],
+      duration: 2000,
+      easing: 'easeInOutQuad'
+    }, '-=800');
+
+  }, []);
 
   return (
     <HeroContainer id="home">
-      {/* A purely CSS background orb to make the text pop */}
-      <div className="bg-glow-orb"></div>
+      <div className="bg-glow-orb" ref={orbRef}></div>
 
-      {/* Left Column: Introduction Text */}
-      <div className="text-section">
-        <h3>⚡ Hi, I'm Braveen </h3>
+      <div className="text-section" ref={textSectionRef}>
+        <h3 className="anim-item">⚡ Hi, I'm Braveen </h3>
         
-        {/* Updated H1 with the dynamic typing hook and animated cursor */}
-        <h1>
-          I'm a <span className="typewriter">{typingText}</span><span className="cursor">|</span>
+        <h1 className="anim-item">
+          I'm a <br className="mobile-break" /><span className="typewriter">{typingText}</span><span className="cursor">|</span>
         </h1>
         
-        <p>
-        I build fast, interactive web applications and heavily customized system environments. Currently completing my BCA, I combine a keen eye for frontend design with a deep appreciation for cloud automation, system ricing, and writing clean, scalable code</p>
+        <p className="anim-item">
+        I build fast, interactive web applications and heavily customized system environments. Currently completing my BCA, I combine a keen eye for frontend design with a deep appreciation for cloud automation, system ricing, and writing clean, scalable code.
+        </p>
         
-        {/* SocialMedia Component includes the Let's Talk button now */}
-        <SocialMedia />
+        <div className="anim-item">
+          <SocialMedia />
+        </div>
       </div>
       
-      {/* Right Column: Your Glowing Glass Card */}
-      <div className="image-section">
+      <div className="image-section" ref={imageSectionRef}>
         <Card />
       </div>
     </HeroContainer>
@@ -96,16 +126,17 @@ const HeroContainer = styled.section`
   padding: 0 8%;
   overflow: hidden;
 
-  /* The bright pink glowing orb hidden behind your text */
   .bg-glow-orb {
     position: absolute;
     top: 20%;
     left: 10%;
     width: 400px;
     height: 400px;
-    background: radial-gradient(circle, rgba(255,0,127,0.15) 0%, rgba(0,0,0,0) 70%);
+    /* Replaced pink with exact RGB of #B21318 (178, 19, 24) */
+    background: radial-gradient(circle, rgba(178,19,24,0.15) 0%, rgba(0,0,0,0) 70%);
     z-index: 0;
     pointer-events: none;
+    opacity: 0; /* Hidden for Anime.js */
   }
   
   .text-section {
@@ -113,6 +144,11 @@ const HeroContainer = styled.section`
     max-width: 650px;
     z-index: 1;
     
+    /* Pre-hide elements for anime.js */
+    .anim-item {
+      opacity: 0;
+    }
+
     h3 {
       font-size: 1.8rem;
       color: var(--text-color);
@@ -126,20 +162,21 @@ const HeroContainer = styled.section`
       color: var(--text-color);
       margin: 0;
       font-weight: 900;
-
-      /* Reserves space for 2 lines of text so the page never jumps on desktop */
       min-height: 180px; 
       
       .typewriter {
-        color: var(--accent-color); /* The neon pink text */
+        color: #B21318; /* Forced Bright Red */
       }
 
-      /* Blinking cursor styles */
       .cursor {
-        color: var(--accent-color);
+        color: #B21318; /* Forced Bright Red */
         font-weight: 900;
         animation: blink 1s step-end infinite;
       }
+    }
+
+    .mobile-break {
+      display: none;
     }
 
     p {
@@ -151,14 +188,13 @@ const HeroContainer = styled.section`
     }
   }
 
-  /* 2. FIXED: Removed the dead .btn-group CSS from here */
-
   .image-section {
     flex: 1;
     display: flex;
     justify-content: flex-end; 
     padding-right: 50px;
     z-index: 1;
+    opacity: 0; /* Hidden for anime.js */
   }
 
   @media (max-width: 900px) {
@@ -168,10 +204,13 @@ const HeroContainer = styled.section`
     gap: 60px;
     padding-top: 60px;
 
-    /* 3. FIXED: Mobile Text Overflow scaling & Bounce Fix */
+    .mobile-break {
+      display: block; /* Forces typewriter to new line on mobile so it doesn't break alignment */
+    }
+
     .text-section h1 {
-      font-size: 2.8rem; /* Scaled down for mobile */
-      min-height: 140px; /* UPDATED to stop the jumping! */
+      font-size: 2.5rem; 
+      min-height: 120px; 
     }
 
     .image-section {
@@ -189,7 +228,6 @@ const HeroContainer = styled.section`
     }
   }
 
-  /* Keyframes for the blinking cursor */
   @keyframes blink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }

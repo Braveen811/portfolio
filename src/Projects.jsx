@@ -1,103 +1,133 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import anime from 'animejs';
 
 const Projects = () => {
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const sectionRef = useRef(null);
+  const headerRef = useRef(null);
+  const gridRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+
+          const tl = anime.timeline({
+            easing: 'easeOutExpo',
+            duration: 1000
+          });
+
+          // 1. Title drops in
+          tl.add({
+            targets: headerRef.current,
+            translateY: [-30, 0],
+            opacity: [0, 1]
+          })
+          // 2. Project cards cascade in
+          .add({
+            targets: gridRef.current.children,
+            translateY: [50, 0],
+            opacity: [0, 1],
+            delay: anime.stagger(100) // Fast cascade effect
+          }, '-=600');
+        }
+      },
+      { threshold: 0.1 } // Triggers slightly earlier for larger grids
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasAnimated]);
+
   return (
-    <ProjectsContainer id="projects">
-      <div className="section-header">
+    <ProjectsContainer id="projects" ref={sectionRef}>
+      <div className="section-header anim-item" ref={headerRef}>
         <h2>⚡ Featured <span>Projects</span></h2>
       </div>
 
-      <div className="projects-grid">
+      <div className="projects-grid" ref={gridRef}>
         
-        {/* ACTIVE PROJECT: Completed/Main Showcase */}
-        <a href="#" className="project-card active" target="_blank" rel="noopener noreferrer">
+        <a href="#" className="project-card active anim-item" target="_blank" rel="noopener noreferrer">
           <span className="status">COMPLETED</span>
           <h3>React Cyberpunk Portfolio</h3>
           <p>A highly interactive, glassmorphism-based developer portfolio featuring dynamic theming and 3D interactions</p>
           <span className="stack">[ React, Styled Components, Vercel ]</span>
         </a>
 
-        {/* ACTIVE PROJECT: Completed/Main Showcase */}
-        <a href="https://github.com/braveen-r/the_archer_dotfiles" className="project-card active" target="_blank" rel="noopener noreferrer">
+        <a href="https://github.com/braveen-r/the_archer_dotfiles" className="project-card active anim-item" target="_blank" rel="noopener noreferrer">
           <span className="status">COMPLETED</span>
           <h3>The Archer Dotfiles</h3>
           <p>A highly customized, blazingly fast Arch Linux setup using bspwm, heavily modified for a seamless, daily-driver experience</p>
           <span className="stack">[ Shell, Python, SCSS ]</span>
         </a>
 
-         {/* ACTIVE PROJECT: Completed/Main Showcase */}
-        <a href="https://github.com/braveen-r/gitops-devsecops-k8s" className="project-card active" target="_blank" rel="noopener noreferrer">
+        <a href="https://github.com/braveen-r/gitops-devsecops-k8s" className="project-card active anim-item" target="_blank" rel="noopener noreferrer">
           <span className="status">COMPLETED</span>
           <h3>Gitops Devsecops K8s</h3>
           <p>This project automates security scanning, container image building, vulnerability assessment, and continuous delivery to a lightweight local Kubernetes cluster using ArgoCD</p>
           <span className="stack">[ JavaScript, Dockerfile, Shell ]</span>
         </a>
 
-        {/* ACTIVE PROJECT: Completed/Main Showcase */}
-        <a href="https://github.com/braveen-r/zero-cost-telemetry-platform" className="project-card active" target="_blank" rel="noopener noreferrer">
+        <a href="https://github.com/braveen-r/zero-cost-telemetry-platform" className="project-card active anim-item" target="_blank" rel="noopener noreferrer">
           <span className="status">COMPLETED</span>
           <h3>The Zero-Cost Telemetry Platform</h3>
           <p>A blazingly fast, end-to-end infrastructure observability pipeline capturing real-time Arch Linux kernel events using eBPF, routed through a time-series database, and visualized on a custom React dashboard—all running locally for $0</p>
           <span className="stack">[ JavaScript, CSS, Python, C, HCL, HTML ]</span>
         </a>
 
-        {/* ACTIVE PROJECT: Completed/Main Showcase */}
-        <a href="https://github.com/braveen-r/distro-doctor" className="project-card active" target="_blank" rel="noopener noreferrer">
+        <a href="https://github.com/braveen-r/distro-doctor" className="project-card active anim-item" target="_blank" rel="noopener noreferrer">
           <span className="status">COMPLETED</span>
           <h3>Distro-Doctor</h3>
           <p>Professional-grade DevOps CLI and CI/CD utility for automatically validating project installation instructions across multiple Linux distributions in parallel using sandboxed Docker containers</p>
           <span className="stack">[ Python ]</span>
         </a>
 
-        {/* ACTIVE PROJECT: Completed/Main Showcase */}
-        <a href="https://github.com/braveen-r/archlings" className="project-card active" target="_blank" rel="noopener noreferrer">
+        <a href="https://github.com/braveen-r/archlings" className="project-card active anim-item" target="_blank" rel="noopener noreferrer">
           <span className="status">COMPLETED</span>
           <h3>Archlings</h3>
           <p>A "Rustlings-inspired" Arch Linux troubleshooting trainer that provides sandboxed, Docker-based labs for practicing system repairs, complete with automated verification and telemetry</p>
           <span className="stack">[ Python, Shell ]</span>
         </a>
 
-        {/* ACTIVE PROJECT: Completed/Main Showcase */}
-        <a href="https://github.com/braveen-r/chaos-stack" className="project-card active" target="_blank" rel="noopener noreferrer">
+        <a href="https://github.com/braveen-r/chaos-stack" className="project-card active anim-item" target="_blank" rel="noopener noreferrer">
           <span className="status">COMPLETED</span>
           <h3>Chaos-Stack</h3>
           <p>A local Chaos Engineering CLI and SRE Observability Control Plane built to intentionally break Docker and emulated AWS infrastructure to validate system resilience</p>
           <span className="stack">[ Python ]</span>
         </a>
 
-        {/* ACTIVE PROJECT: Completed/Main Showcase */}
-        <a href="https://github.com/braveen-r/restore-drill" className="project-card active" target="_blank" rel="noopener noreferrer">
+        <a href="https://github.com/braveen-r/restore-drill" className="project-card active anim-item" target="_blank" rel="noopener noreferrer">
           <span className="status">COMPLETED</span>
           <h3>Restore-Drill</h3>
           <p>An automated Site Reliability Engineering (SRE) disaster recovery engine that extracts backup snapshots, measures RTO/RPO SLAs, executes integrity smoke tests, and dispatches dynamic runbooks via Discord</p>
           <span className="stack">[ JavaScript, Python, Shell, CSS, HTML ]</span>
         </a>
 
-        {/* ACTIVE PROJECT: Completed/Main Showcase */}
-        <a href="https://github.com/braveen-r/build-pulse-analytics" className="project-card active" target="_blank" rel="noopener noreferrer">
+        <a href="https://github.com/braveen-r/build-pulse-analytics" className="project-card active anim-item" target="_blank" rel="noopener noreferrer">
           <span className="status">COMPLETED</span>
           <h3>Build-Pulse Analytics</h3>
           <p>A zero-cost, serverless DevOps observability platform that extracts real-time CI/CD pipeline metrics from GitHub Actions and visualizes them on a high-performance React command center</p>
           <span className="stack">[ JavaScript, CSS, HTML ]</span>
         </a>
 
-        {/* ACTIVE PROJECT: Completed/Main Showcase (No Link) */}
-        <div className="project-card active">
+        <div className="project-card active anim-item">
           <span className="status">IN_PROGRESS</span>
           <h3>IoT Data Interface</h3>
           <p>A real-time dashboard visualizing hardware sensor metrics, bridging physical data with a responsive web-based interface.</p>
           <span className="stack">[ JavaScript, WebSockets, Node.js ]</span>
         </div>
 
-        {/* IN-PROGRESS/UPCOMING PROJECT: Dashed Wireframe Style */}
-        <div className="project-card">
+        <div className="project-card anim-item">
           <span className="status">UPCOMING</span>
           <h3></h3>
           <p></p>
           <span className="stack">[ Soon ]</span>
         </div>
-
 
       </div>
     </ProjectsContainer>
@@ -109,6 +139,10 @@ const ProjectsContainer = styled.section`
   position: relative;
   z-index: 1;
 
+  .anim-item {
+    opacity: 0;
+  }
+
   .section-header h2 {
     font-size: 2.5rem;
     color: var(--text-color);
@@ -116,7 +150,7 @@ const ProjectsContainer = styled.section`
     font-weight: 800;
     
     span {
-      color: var(--accent-color);
+      color: #B21318;
     }
   }
 
@@ -128,8 +162,7 @@ const ProjectsContainer = styled.section`
   }
  
   .project-card {
-    /* Uses a subtle border tint for light/dark mode fallback */
-    border: 1px dashed var(--surface-border, rgba(178, 19, 24, 0.3));
+    border: 1px dashed rgba(178, 19, 24, 0.3);
     border-radius: 10px;
     padding: 32px 22px;
     min-height: 200px;
@@ -140,11 +173,11 @@ const ProjectsContainer = styled.section`
     gap: 10px;
     color: var(--text-muted);
     transition: all 0.3s ease;
-    text-decoration: none; /* In case it's used as an anchor tag */
+    text-decoration: none; 
   }
 
   .project-card:hover { 
-    border-color: var(--accent-color); 
+    border-color: #B21318; 
     transform: translateY(-4px);
   }
  
@@ -152,15 +185,13 @@ const ProjectsContainer = styled.section`
     font-family: 'Courier New', Courier, monospace;
     font-size: 11px;
     font-weight: bold;
-    color: var(--accent-color);
-    /* Soft orange/ember border as requested in your CSS */
+    color: #B21318;
     border: 1px solid rgba(249,115,22,0.35); 
     padding: 4px 10px;
     border-radius: 100px;
     letter-spacing: 1px;
   }
  
-  /* ACTIVE PROJECT OVERRIDES */
   .project-card.active {
     border-style: solid;
     background: var(--card-bg, rgba(0, 0, 0, 0.03));
@@ -172,7 +203,7 @@ const ProjectsContainer = styled.section`
   }
 
   .project-card.active .status {
-    color: var(--accent-color);
+    color: #B21318;
     border-color: rgba(178, 19, 24, 0.4);
     background: rgba(178, 19, 24, 0.08);
   }
@@ -195,11 +226,10 @@ const ProjectsContainer = styled.section`
     font-family: 'Courier New', Courier, monospace;
     font-size: 12px;
     color: var(--text-muted);
-    margin-top: auto; /* Pushes stack to the bottom of the card */
+    margin-top: auto; 
     opacity: 0.8;
   }
  
-  /* INACTIVE PROJECT OVERRIDES */
   .project-card h3 {
     font-family: 'Courier New', Courier, monospace;
     font-size: 1rem;
@@ -213,14 +243,9 @@ const ProjectsContainer = styled.section`
     margin: 0;
   }
 
-  /* Responsive Design */
   @media (max-width: 900px) {
     padding: 40px 5%;
-    
-    .projects-grid {
-      /* Reverts to 1 column on mobile devices */
-      grid-template-columns: 1fr;
-    }
+    .projects-grid { grid-template-columns: 1fr; }
   }
 `;
 

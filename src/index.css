@@ -15,7 +15,8 @@
   --bg-color: #050505; 
   --bg-gradient: radial-gradient(circle at 70% 30%, #4A080A 0%, var(--bg-color) 60%);
   --nav-bg: rgba(255, 255, 255, 0.03);
-  --accent-color: #B21318; 
+  --accent-color: #B21318;  
+  --accent-color: #B21318;  
   
   /* Text */
   --text-color: #ffffff;
@@ -71,7 +72,10 @@ body {
   background-color: var(--bg-color);
   color: var(--text-color);
   transition: all 0.5s ease;
-  font-family: 'Inter', sans-serif;
+  
+  /* FIXED: Added Apple, Windows, and Google color emoji fonts to the stack */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  
   margin: 0;
   padding: 0;
   box-sizing: border-box;

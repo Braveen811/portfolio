@@ -14,7 +14,7 @@ const Switch = () => {
 
   const toggleTheme = () => {
     setIsDarkTheme(!isDarkTheme);
-  };
+  }; 
 
   return (
     <StyledWrapper>
